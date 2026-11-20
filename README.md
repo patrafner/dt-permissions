@@ -166,13 +166,20 @@ unavailable" and everything else still works.
 ## Setup and deployment
 
 1. Create the OAuth client and note the account UUID (see above).
-2. Set `environmentUrl` in `app.config.json` to the target tenant.
-3. Bump the version (see below).
-4. `npm install`, then `npm run deploy` (you will be asked to sign in).
-5. In the tenant: **Settings → Account Management API connection** and enter
+2. Copy `app.config.example.json` to `app.config.json` (it is gitignored so your tenant URL stays local):
+   ```bash
+   cp app.config.example.json app.config.json
+   ```
+3. Set `environmentUrl` in `app.config.json` to the target tenant URL, for example:
+   ```json
+   "environmentUrl": "https://abc12345.live.dynatrace.com/"
+   ```
+4. Bump the version (see below).
+5. `npm install`, then `npm run deploy` (you will be asked to sign in).
+6. In the tenant: **Settings → Account Management API connection** and enter
    `accountUuid`, `clientId`, `clientSecret`.
-6. Allow the outbound hosts listed above.
-7. Open the app from the Apps menu and look up a user.
+7. Allow the outbound hosts listed above.
+8. Open the app from the Apps menu and look up a user.
 
 ### Versioning
 
