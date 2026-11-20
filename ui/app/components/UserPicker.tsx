@@ -20,7 +20,7 @@ interface ListedUser {
   status: string;
 }
 
-const MAX_RESULTS = 8;
+const MAX_FILTERED = 100;
 const EMAIL = /^[^\s@/?#\\]+@[^\s@/?#\\]+\.[^\s@/?#\\]+$/;
 
 const norm = (s: string) => s.trim().toLowerCase();
@@ -28,20 +28,23 @@ const norm = (s: string) => s.trim().toLowerCase();
 /** Search the account's users by name or email; picking one runs the lookup. */
 export const UserPicker = ({
   onSelect,
+  initialEmail,
 }: {
   onSelect: (email: string) => void;
+  initialEmail?: string;
 }) => {
   const { data, error, isLoading } = useAppFunction({
     name: "list-users",
     data: {},
   });
   const users = (data as { users: ListedUser[] } | undefined)?.users;
-  const [query, setQuery] = useState("");
-  const [picked, setPicked] = useState(false);
+  const [query, setQuery] = useState(initialEmail ?? "");
+  const [picked, setPicked] = useState(!!initialEmail);
 
   const matches = useMemo(() => {
+    if (!users) return [];
     const q = norm(query);
-    if (!users || q.length < 2) return [];
+    if (!q) return users;
     const scored = users
       .map((u) => {
         const full = norm(`${u.name} ${u.surname}`);
@@ -57,7 +60,7 @@ export const UserPicker = ({
       })
       .filter((x) => x.rank < 2)
       .sort((a, b) => a.rank - b.rank);
-    return scored.slice(0, MAX_RESULTS).map((x) => x.u);
+    return scored.slice(0, MAX_FILTERED).map((x) => x.u);
   }, [users, query]);
 
   const choose = (email: string, label: string) => {
@@ -78,8 +81,8 @@ export const UserPicker = ({
         }}
         placeholder={
           users
-            ? `Search ${users.length} users by name or email`
-            : "Search users by name or email"
+            ? `Filter ${users.length} users by name or email`
+            : "Filter users by name or email"
         }
         onKeyDown={(e) => {
           if (e.key !== "Enter") return;
@@ -112,6 +115,8 @@ export const UserPicker = ({
             border: `${Borders.Width.Default} solid ${Colors.Border.Neutral.Default}`,
             borderRadius: Borders.Radius.Container.Default,
             overflow: "hidden",
+            maxHeight: 360,
+            overflowY: "auto",
           }}
         >
           {matches.map((u, i) => (
@@ -151,7 +156,7 @@ export const UserPicker = ({
           ))}
         </div>
       )}
-      {!picked && users && query.trim().length >= 2 && matches.length === 0 && (
+      {!picked && users && query.trim().length > 0 && matches.length === 0 && (
         <Text style={{ opacity: 0.7 }}>
           No matching users.
           {typedEmail ? " Press Enter to look up this email anyway." : ""}

@@ -1,9 +1,9 @@
 {
   "$schema": "./.dt-app/app.config.schema.json",
-  "environmentUrl": "https://lzh3074h.sprint.apps.dynatracelabs.com/",
+  "environmentUrl": "",
   "app": {
     "name": "User Permission Explorer",
-    "version": "0.8.2",
+    "version": "0.9.1",
     "description": "Explore user permissions and IAM policies using the Account Management API",
     "id": "my.permissionexplorer",
     "scopes": [

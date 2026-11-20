@@ -1,6 +1,6 @@
 {
   "name": "permissionexplorer",
-  "version": "0.8.2",
+  "version": "0.9.1",
   "description": "A starting project with routing, fetching data, and charting",
   "scripts": {
     "build": "dt-app build",

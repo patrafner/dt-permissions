@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
+import { useLocation } from "react-router-dom";
 
 import { Button } from "@dynatrace/strato-components/buttons";
 import {
@@ -204,7 +205,11 @@ const Results = ({
 };
 
 export const Explorer = () => {
-  const [submitted, setSubmitted] = useState<{ email: string; n: number }>();
+  const location = useLocation();
+  const preEmail = (location.state as { email?: string } | null)?.email;
+  const [submitted, setSubmitted] = useState<{ email: string; n: number }>(
+    preEmail ? { email: preEmail, n: 1 } : undefined!,
+  );
   const [filter, setFilter] = useState("");
   const [onlyConditional, setOnlyConditional] = useState(false);
   const [assistOpen, setAssistOpen] = useState(false);
@@ -220,6 +225,7 @@ export const Explorer = () => {
         onSelect={(email) =>
           setSubmitted({ email, n: (submitted?.n ?? 0) + 1 })
         }
+        initialEmail={preEmail ?? undefined}
       />
       <Flex gap={16} alignItems="flex-end" flexWrap="wrap">
         <TextInput

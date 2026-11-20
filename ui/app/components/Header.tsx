@@ -13,6 +13,9 @@ export const Header = () => {
         <AppHeader.NavigationItem as={Link} to="/ad-mapping">
           AD group mapping
         </AppHeader.NavigationItem>
+        <AppHeader.NavigationItem as={Link} to="/group-members">
+          Group members
+        </AppHeader.NavigationItem>
       </AppHeader.Navigation>
     </AppHeader>
   );

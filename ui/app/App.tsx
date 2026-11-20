@@ -4,6 +4,7 @@ import { Route, Routes } from "react-router-dom";
 import { Header } from "./components/Header";
 import { AdMapping } from "./pages/AdMapping";
 import { Explorer } from "./pages/Explorer";
+import { GroupMembers } from "./pages/GroupMembers";
 
 export const App = () => {
   return (
@@ -15,6 +16,7 @@ export const App = () => {
         <Routes>
           <Route path="/" element={<Explorer />} />
           <Route path="/ad-mapping" element={<AdMapping />} />
+          <Route path="/group-members" element={<GroupMembers />} />
         </Routes>
       </PageLayout.Content>
     </PageLayout>
