@@ -1,6 +1,6 @@
 {
   "$schema": "./.dt-app/app.config.schema.json",
-  "environmentUrl": "",
+  "environmentUrl": "https://lzh3074h.sprint.apps.dynatracelabs.com/",
   "app": {
     "name": "User Permission Explorer",
     "version": "0.8.2",
